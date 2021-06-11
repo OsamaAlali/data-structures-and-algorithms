@@ -207,7 +207,7 @@ const countNumberOfChildren = (arr) => {
   const count=arr.reduce((sum,item)=>{
     if(item.children){
       sum =sum + item.children.length;
-      console.log('sum :'+ sum + 'item: '+ item.children.length);
+      // console.log('sum :'+ sum + 'item: '+ item.children.length);
 
     }
     return sum;
@@ -224,9 +224,16 @@ Hint: The accumulator should begin as { count: 0, sum: 0 }
 ------------------------------------------------------------------------------------------------ */
 
 const calculateAverage = (arr) => {
-  // Solution code here...
+  let numberOfMark=arr.length;
+  let sum1=arr.reduce((sum , mark)=>{
+    sum =sum + mark;
+    // console.log ( 'mark :',mark ,' Sum:',sum );
+    return sum;
+  },0);
+  const avg=sum1 /numberOfMark;
+  return avg;
 };
-
+// console.log('Final result',calculateAverage([18, 290, 37, 4, 55, 16, 7, 85 ]));
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 9 - Stretch Goal
 
@@ -245,9 +252,18 @@ const isPrime = (value) => {
 };
 
 const countPrimeNumbers = (arr) => {
-  // Solution code here...
-};
 
+  const countF =arr.reduce((count , value)=>{
+    if(isPrime(value)) {
+      count++;
+    }
+
+    return count ;
+  },0);
+
+  return countF;
+};
+// console.log(countPrimeNumbers([1, 2, 13, 64, 45, 56, 17, 8]));
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 10 - Stretch Goal
 
@@ -288,9 +304,21 @@ const snorlaxData = {
 };
 
 const extractStat = (statName, arr) => {
-  // Solution code here...
-};
+  const newobj=arr.reduce((result,item)=>{
+    // console.log('1',item.stat.name);
+    if(item.stat.name === statName)
+    {
 
+      result[item]=item;
+      // console.log(result);
+
+    }
+    return result;
+  });
+  // console.log('new',newobj);
+  return newobj;
+};
+// console.log(extractStat('speed',snorlaxData.stats));
 /* ------------------------------------------------------------------------------------------------
 CHALLENGE 11 - Stretch Goal
 
@@ -302,9 +330,25 @@ Write a function named extractChildren that, given the array of characters from 
 ------------------------------------------------------------------------------------------------ */
 
 const extractChildren = (arr) => {
-  // Solution code here...
-};
 
+  let newArry=arr.filter((element)=>{
+    if (element.includes("a")) {
+      return true ;
+    } else {
+      return false;
+    }
+  });
+  console.log(newArry);
+
+  let reduceArry = [];
+  newArry.reduce((all,fitem)=>{
+
+    reduceArry.push(fitem);
+  },{});
+
+  return reduceArry;
+};
+extractChildren([ 'Robb', 'Sansa', 'Arya', 'Bran', 'Rickon', 'Drogon', 'Rhaegal', 'Viserion', 'Margaery', 'Loras' ]);
 /* ------------------------------------------------------------------------------------------------
 TESTS
 
@@ -365,19 +409,19 @@ describe('Testing challenge 7', () => {
   });
 });
 
-xdescribe('Testing challenge 8', () => {
+describe('Testing challenge 8', () => {
   test('It should return the average of the numbers in the array', () => {
     expect(calculateAverage([18, 290, 37, 4, 55, 16, 7, 85 ])).toStrictEqual(64);
   });
 });
 
-xdescribe('Testing challenge 9', () => {
+describe('Testing challenge 9', () => {
   test('It should return a count of the prime numbers in the array', () => {
     expect(countPrimeNumbers([1, 2, 13, 64, 45, 56, 17, 8])).toStrictEqual(3);
   });
 });
 
-xdescribe('Testing challenge 10', () => {
+describe('Testing challenge 10', () => {
   test('It should return any stats that match the input', () => {
     expect(extractStat('speed', snorlaxData.stats)).toStrictEqual({ stat: { url: 'https://pokeapi.co/api/v2/stat/6/', name: 'speed' }, effort: 5, baseStat: 30 });
   });
